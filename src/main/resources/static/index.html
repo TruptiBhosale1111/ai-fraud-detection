@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AI Fraud Detection System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<header>
+    <h1>🔒 AI Fraud Detection System</h1>
+    <p>Behaviour-based monitoring with explainable scoring and accuracy evaluation</p>
+</header>
+
+<div class="nav-bar">
+    <a href="index.html" class="nav-link active">💳 Transaction</a>
+    <a href="email.html" class="nav-link">📧 Email</a>
+    <a href="qr.html" class="nav-link">📱 QR Code</a>
+    <a href="call.html" class="nav-link">📞 Call / SMS</a>
+    <a href="offer.html" class="nav-link">💼 Job / Loan</a>
+</div>
+
+
+
+<div class="container">
+
+    <div class="stats-grid">
+        <div class="stat-card blue">
+            <div class="stat-label">Total Transactions</div>
+            <div class="stat-value" id="statTotal">0</div>
+        </div>
+        <div class="stat-card red">
+            <div class="stat-label">Fraud Detected</div>
+            <div class="stat-value" id="statFraud">0</div>
+        </div>
+        <div class="stat-card green">
+            <div class="stat-label">Legitimate</div>
+            <div class="stat-value" id="statLegit">0</div>
+        </div>
+        <div class="stat-card orange">
+            <div class="stat-label">Fraud Rate</div>
+            <div class="stat-value" id="statRate">0%</div>
+        </div>
+        <div class="stat-card purple">
+            <div class="stat-label">Amount Flagged</div>
+            <div class="stat-value" id="statAmount">0</div>
+        </div>
+        <div class="stat-card teal">
+            <div class="stat-label">Active Users</div>
+            <div class="stat-value" id="statUsers">0</div>
+        </div>
+    </div>
+
+    <div class="two-column">
+
+        <div class="card">
+            <h2>Analyze Single Transaction</h2>
+
+            <label>User ID</label>
+            <input type="text" id="userId" value="USER001" placeholder="e.g. USER001">
+
+            <label>Amount</label>
+            <input type="number" id="amount" placeholder="Enter amount">
+
+            <label>Transaction Type</label>
+            <select id="type">
+                <option value="PURCHASE">Purchase</option>
+                <option value="WITHDRAWAL">Withdrawal</option>
+                <option value="TRANSFER">Transfer</option>
+            </select>
+
+            <label>Location</label>
+            <input type="text" id="location" placeholder="e.g. Mumbai / UNKNOWN">
+
+            <label>Date and Time</label>
+            <input type="datetime-local" id="time">
+
+            <button class="btn-primary" onclick="analyze()">🔍 Analyze Transaction</button>
+
+            <div class="quick-test">
+                <p>Quick Test:</p>
+                <button class="btn-small red" onclick="fillFraud()">Fraud Example</button>
+                <button class="btn-small green" onclick="fillLegit()">Legit Example</button>
+                <button class="btn-small teal" onclick="trainUser()">🧠 Train USER001</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Detection Result</h2>
+            <div id="resultBox" class="result-empty">
+                No transaction analyzed yet
+            </div>
+            <div id="reasonBox"></div>
+        </div>
+
+    </div>
+
+    <!-- ACCURACY METRICS -->
+    <div class="card metrics-card">
+        <div class="table-header">
+            <h2>📊 Model Performance Evaluation</h2>
+            <button class="btn-small teal" onclick="loadMetrics()">🔄 Refresh</button>
+        </div>
+        <p class="hint">
+            Mark transactions as actually fraud or actually legitimate in the table below.
+            The system then computes a confusion matrix and standard classification metrics.
+        </p>
+
+        <div id="metricsBox"></div>
+    </div>
+
+    <!-- USER PROFILE -->
+    <div class="card profile-card">
+        <h2>🧠 User Behaviour Profile</h2>
+        <p class="hint">
+            The system learns each user's normal spending pattern.
+            After 3 transactions it detects deviations specific to that user.
+        </p>
+
+        <div class="upload-row">
+            <input type="text" id="profileUser" value="USER001" placeholder="Enter User ID">
+            <button class="btn-upload" onclick="loadProfile()">👤 View Profile</button>
+        </div>
+
+        <div id="profileBox"></div>
+    </div>
+
+    <!-- CSV UPLOAD -->
+    <div class="card upload-card">
+        <h2>📂 Bulk Upload (CSV)</h2>
+        <p class="hint">
+            Format: <code>userId,amount,transactionType,location,transactionTime</code>
+        </p>
+
+        <div class="upload-row">
+            <input type="file" id="csvFile" accept=".csv">
+            <button class="btn-upload" onclick="uploadCSV()">⬆ Upload &amp; Analyze</button>
+            <button class="btn-sample" onclick="downloadSample()">⬇ Sample CSV</button>
+        </div>
+
+        <div id="uploadStatus"></div>
+        <div id="batchSummary"></div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="two-column">
+        <div class="card">
+            <h2>Fraud vs Legit</h2>
+            <canvas id="pieChart"></canvas>
+        </div>
+        <div class="card">
+            <h2>Risk Level Breakdown</h2>
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="card">
+        <div class="table-header">
+            <h2>Transaction History &amp; Review</h2>
+            <div>
+                <button class="btn-export" onclick="exportCSV()">⬇ Export CSV</button>
+                <button class="btn-danger" onclick="clearAll()">🗑 Clear All</button>
+            </div>
+        </div>
+
+        <div class="filters">
+            <input type="text" id="search" placeholder="🔍 Search user, location or type..." onkeyup="renderTable()">
+            <select id="filter" onchange="renderTable()">
+                <option value="ALL">All Results</option>
+                <option value="FRAUD">Fraud Only</option>
+                <option value="LEGIT">Legit Only</option>
+                <option value="UNLABELED">Not Reviewed</option>
+            </select>
+        </div>
+
+        <div id="list"></div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>QR Code Fraud Scanner</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body>
+
+<header class="header-qr">
+    <h1>📱 Fake QR Code Scanner</h1>
+    <p>Check any payment QR before you scan it in your UPI app</p>
+</header>
+<div class="nav-bar">
+    <a href="index.html" class="nav-link">💳 Transaction</a>
+    <a href="email.html" class="nav-link">📧 Email</a>
+    <a href="qr.html" class="nav-link active">📱 QR Code</a>
+    <a href="call.html" class="nav-link">📞 Call / SMS</a>
+    <a href="offer.html" class="nav-link">💼 Job / Loan</a>
+</div>
+
+<div class="golden-rule">
+    ⚠️ <b>Golden Rule:</b> Scanning a QR code can only <b>SEND</b> money — never receive it.
+    Anyone asking you to scan a QR "to get your refund" is stealing from you.
+</div>
+
+<div class="container">
+
+    <div class="stats-grid">
+        <div class="stat-card blue">
+            <div class="stat-label">QRs Scanned</div>
+            <div class="stat-value" id="qTotal">0</div>
+        </div>
+        <div class="stat-card red">
+            <div class="stat-label">Threats Found</div>
+            <div class="stat-value" id="qThreats">0</div>
+        </div>
+        <div class="stat-card green">
+            <div class="stat-label">Safe QRs</div>
+            <div class="stat-value" id="qSafe">0</div>
+        </div>
+        <div class="stat-card orange">
+            <div class="stat-label">Dangerous</div>
+            <div class="stat-value" id="qDanger">0</div>
+        </div>
+    </div>
+
+    <div class="two-column">
+
+        <div class="card">
+            <h2>Check a QR Code</h2>
+
+            <div class="tab-row">
+                <button class="tab-btn active" id="tabPaste" onclick="switchTab('paste')">⌨ Paste Data</button>
+                <button class="tab-btn" id="tabImage" onclick="switchTab('image')">🖼 Upload Image</button>
+                <button class="tab-btn" id="tabCam" onclick="switchTab('cam')">📷 Camera</button>
+            </div>
+
+            <!-- PASTE -->
+            <div id="paneP">
+                <label>QR Code Data</label>
+                <textarea id="qrData" rows="5" placeholder="upi://pay?pa=someone@oksbi&pn=Shop&am=100&cu=INR"></textarea>
+                <button class="btn-primary" onclick="scanQR()">🔎 Analyze QR Code</button>
+            </div>
+
+            <!-- IMAGE -->
+            <div id="paneI" style="display:none">
+                <label>Upload a QR image</label>
+                <input type="file" id="qrFile" accept="image/*" onchange="readImage()">
+                <div id="imgStatus" class="qr-status"></div>
+                <div id="reader-file" style="display:none"></div>
+            </div>
+
+            <!-- CAMERA -->
+            <div id="paneC" style="display:none">
+                <div id="reader" class="qr-reader"></div>
+                <button class="btn-primary" id="camBtn" onclick="toggleCam()">📷 Start Camera</button>
+                <p class="hint" style="margin-top:10px">
+                    Camera needs <code>http://127.0.0.1</code> (VS Code Live Server).
+                    If it does not open, use Paste or Upload instead.
+                </p>
+            </div>
+
+            <div class="quick-test">
+                <p>Try a sample QR:</p>
+                <button class="btn-small green" onclick="sampleSafe()">Genuine Shop</button>
+                <button class="btn-small red" onclick="sampleRefund()">Refund Scam</button>
+                <button class="btn-small orange2" onclick="sampleCollect()">Collect Request</button>
+                <button class="btn-small purple2" onclick="samplePhish()">Fake Website</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Scan Result</h2>
+            <div id="qVerdict" class="result-empty">No QR analyzed yet</div>
+            <div id="qAdvice"></div>
+            <div id="qDetails"></div>
+            <div id="qReasons"></div>
+        </div>
+
+    </div>
+
+    <div class="card">
+        <h2>🧾 QR Preview (for your demo)</h2>
+        <p class="hint">
+            This generates a real scannable QR from the data above — show it on screen and scan it with a phone during your presentation.
+        </p>
+        <button class="btn-upload" onclick="makePreview()">🖼 Generate QR Image</button>
+        <div id="qrPreview"></div>
+    </div>
+
+    <div class="card">
+        <div class="table-header">
+            <h2>Scan History</h2>
+            <button class="btn-danger" onclick="clearQR()">🗑 Clear All</button>
+        </div>
+        <div id="qList"></div>
+    </div>
+
+</div>
+
+<script src="qr.js"></script>
+</body>
+</html>

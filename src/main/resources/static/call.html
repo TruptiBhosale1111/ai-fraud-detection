@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fake Call &amp; SMS Scanner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header-call">
+    <h1>📞 Fake Call &amp; SMS Scam Detector</h1>
+    <p>Check any suspicious call or message before you respond</p>
+</header>
+
+
+<div class="nav-bar">
+    <a href="index.html" class="nav-link">💳 Transaction</a>
+    <a href="email.html" class="nav-link">📧 Email</a>
+    <a href="qr.html" class="nav-link">📱 QR Code</a>
+    <a href="call.html" class="nav-link active">📞 Call / SMS</a>
+    <a href="offer.html" class="nav-link">💼 Job / Loan</a>
+</div>
+
+
+<div class="golden-rule rule-call">
+    ⚠️ <b>Golden Rule:</b> Real bank SMS come from a sender ID like <code>VM-HDFCBK</code>, never from a 10-digit mobile number.
+    No bank, police or government officer will ever ask for your OTP.
+</div>
+
+<div class="container">
+
+    <div class="stats-grid">
+        <div class="stat-card blue">
+            <div class="stat-label">Messages Checked</div>
+            <div class="stat-value" id="cTotal">0</div>
+        </div>
+        <div class="stat-card red">
+            <div class="stat-label">Threats Found</div>
+            <div class="stat-value" id="cThreats">0</div>
+        </div>
+        <div class="stat-card green">
+            <div class="stat-label">Safe</div>
+            <div class="stat-value" id="cSafe">0</div>
+        </div>
+        <div class="stat-card orange">
+            <div class="stat-label">Dangerous</div>
+            <div class="stat-value" id="cDanger">0</div>
+        </div>
+    </div>
+
+    <div class="two-column">
+
+        <div class="card">
+            <h2>Check a Call or SMS</h2>
+
+            <label>Sender / Caller Number</label>
+            <input type="text" id="cSender" placeholder="e.g. +919876543210 or VM-HDFCBK">
+
+            <label>Channel</label>
+            <select id="cChannel">
+                <option value="SMS">SMS</option>
+                <option value="CALL">Phone Call</option>
+                <option value="WHATSAPP">WhatsApp</option>
+            </select>
+
+            <label>Message / What they said</label>
+            <textarea id="cMessage" rows="8" placeholder="Paste the SMS text, or type what the caller said..."></textarea>
+
+            <button class="btn-primary" onclick="scanCall()">🔎 Check This Message</button>
+
+            <div class="quick-test">
+                <p>Try a real scam sample:</p>
+                <button class="btn-small red" onclick="sKyc()">Fake KYC</button>
+                <button class="btn-small purple2" onclick="sArrest()">Digital Arrest</button>
+                <button class="btn-small orange2" onclick="sLottery()">Lottery SMS</button>
+                <button class="btn-small red" onclick="sElectric()">Electricity Bill</button>
+                <button class="btn-small purple2" onclick="sArmy()">Army / OLX</button>
+                <button class="btn-small green" onclick="sSafe()">Genuine SMS</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Analysis Result</h2>
+            <div id="cVerdict" class="result-empty">No message checked yet</div>
+            <div id="cAdvice"></div>
+            <div id="cMeta"></div>
+            <div id="cReasons"></div>
+            <div id="cLinks"></div>
+        </div>
+
+    </div>
+
+    <div class="card helpline-card">
+        <h2>🆘 If you have already been scammed</h2>
+        <div class="help-grid">
+            <div class="help-box">
+                <div class="hnum">1930</div>
+                <div class="htxt">National Cyber Crime Helpline<br>Call within 1 hour to freeze the transaction</div>
+            </div>
+            <div class="help-box">
+                <div class="hnum">cybercrime.gov.in</div>
+                <div class="htxt">File an online complaint<br>Government of India portal</div>
+            </div>
+            <div class="help-box">
+                <div class="hnum">1909</div>
+                <div class="htxt">Report spam SMS / calls<br>TRAI DND service</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="table-header">
+            <h2>Scan History</h2>
+            <button class="btn-danger" onclick="clearCalls()">🗑 Clear All</button>
+        </div>
+        <div id="cList"></div>
+    </div>
+
+</div>
+
+<script src="call.js"></script>
+</body>
+</html>

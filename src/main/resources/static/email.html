@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Phishing Email Scanner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header-email">
+    <h1>📧 Phishing &amp; Scam Email Scanner</h1>
+    <p>Paste any suspicious email to check if it is a scam before you pay or click</p>
+</header>
+
+<div class="nav-bar">
+    <a href="index.html" class="nav-link">💳 Transaction</a>
+    <a href="email.html" class="nav-link active">📧 Email</a>
+    <a href="qr.html" class="nav-link">📱 QR Code</a>
+    <a href="call.html" class="nav-link">📞 Call / SMS</a>
+    <a href="offer.html" class="nav-link">💼 Job / Loan</a>
+</div>
+
+<div class="container">
+
+    <div class="stats-grid">
+        <div class="stat-card blue">
+            <div class="stat-label">Emails Scanned</div>
+            <div class="stat-value" id="eTotal">0</div>
+        </div>
+        <div class="stat-card red">
+            <div class="stat-label">Threats Found</div>
+            <div class="stat-value" id="eThreats">0</div>
+        </div>
+        <div class="stat-card green">
+            <div class="stat-label">Safe Emails</div>
+            <div class="stat-value" id="eSafe">0</div>
+        </div>
+        <div class="stat-card orange">
+            <div class="stat-label">Dangerous</div>
+            <div class="stat-value" id="eDanger">0</div>
+        </div>
+    </div>
+
+    <div class="two-column">
+
+        <div class="card">
+            <h2>Scan an Email</h2>
+
+            <label>Sender Email Address</label>
+            <input type="text" id="sender" placeholder="e.g. support@sbi-verify.gmail.com">
+
+            <label>Subject</label>
+            <input type="text" id="subject" placeholder="e.g. URGENT: Account Suspended">
+
+            <label>Email Body</label>
+            <textarea id="content" rows="10" placeholder="Paste the full email text here..."></textarea>
+
+            <button class="btn-primary" onclick="scanEmail()">🔎 Scan This Email</button>
+
+            <div class="quick-test">
+                <p>Try a sample:</p>
+                <button class="btn-small red" onclick="loadScam()">Scam Email</button>
+                <button class="btn-small orange2" onclick="loadLottery()">Lottery Scam</button>
+                <button class="btn-small green" onclick="loadSafe()">Safe Email</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Scan Result</h2>
+            <div id="verdictBox" class="result-empty">
+                No email scanned yet
+            </div>
+            <div id="adviceBox"></div>
+            <div id="eReasonBox"></div>
+            <div id="linkBox"></div>
+        </div>
+
+    </div>
+
+    <div class="card">
+        <div class="table-header">
+            <h2>Scan History</h2>
+            <button class="btn-danger" onclick="clearEmails()">🗑 Clear All</button>
+        </div>
+        <div id="eList"></div>
+    </div>
+
+</div>
+
+<script src="email.js"></script>
+</body>
+</html>

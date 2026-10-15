@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fake Job &amp; Loan Offer Checker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header-offer">
+    <h1>💼 Fake Job &amp; Loan Offer Checker</h1>
+    <p>Verify any job offer, internship or loan approval before you pay or share documents</p>
+</header>
+
+<div class="nav-bar">
+    <a href="index.html" class="nav-link">💳 Transaction Fraud</a>
+    <a href="email.html" class="nav-link">📧 Email Scanner</a>
+    <a href="qr.html" class="nav-link">📱 QR Scanner</a>
+    <a href="call.html" class="nav-link">📞 Call / SMS</a>
+    <a href="offer.html" class="nav-link active">💼 Job / Loan</a>
+</div>
+
+<div class="golden-rule rule-offer">
+    ⚠️ <b>Golden Rule:</b> A real employer <b>pays you</b>. A real lender <b>deducts fees from the disbursed loan</b>.
+    Anyone asking you to pay <b>before</b> you receive anything is a scammer.
+</div>
+
+<div class="container">
+
+    <div class="stats-grid">
+        <div class="stat-card blue">
+            <div class="stat-label">Offers Checked</div>
+            <div class="stat-value" id="oTotal">0</div>
+        </div>
+        <div class="stat-card red">
+            <div class="stat-label">Threats Found</div>
+            <div class="stat-value" id="oThreats">0</div>
+        </div>
+        <div class="stat-card green">
+            <div class="stat-label">Safe Offers</div>
+            <div class="stat-value" id="oSafe">0</div>
+        </div>
+        <div class="stat-card orange">
+            <div class="stat-label">Dangerous</div>
+            <div class="stat-value" id="oDanger">0</div>
+        </div>
+        <div class="stat-card teal">
+            <div class="stat-label">Job / Loan Split</div>
+            <div class="stat-value" id="oSplit">0 / 0</div>
+        </div>
+    </div>
+
+    <div class="two-column">
+
+        <div class="card">
+            <h2>Check an Offer</h2>
+
+            <label>Offer Type</label>
+            <select id="oType">
+                <option value="JOB">Job Offer</option>
+                <option value="INTERNSHIP">Internship</option>
+                <option value="LOAN">Loan Approval</option>
+                <option value="WORK FROM HOME">Work From Home</option>
+            </select>
+
+            <label>Company / Lender Name</label>
+            <input type="text" id="oCompany" placeholder="e.g. Amazon India / QuickCash Finance">
+
+            <label>Recruiter Contact (email, phone or link)</label>
+            <input type="text" id="oContact" placeholder="e.g. hr.amazon.hiring@gmail.com">
+
+            <label>Offer Message</label>
+            <textarea id="oContent" rows="9" placeholder="Paste the full job offer, WhatsApp message or loan approval text here..."></textarea>
+
+            <button class="btn-primary" onclick="scanOffer()">🔎 Check This Offer</button>
+
+            <div class="quick-test">
+                <p>Try a real scam sample:</p>
+                <button class="btn-small red" onclick="sFeeJob()">Registration Fee Job</button>
+                <button class="btn-small purple2" onclick="sTask()">Telegram Task Scam</button>
+                <button class="btn-small orange2" onclick="sLoan()">Instant Loan App</button>
+                <button class="btn-small red" onclick="sFakeHR()">Fake Amazon HR</button>
+                <button class="btn-small green" onclick="sGenuine()">Genuine Offer</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Verification Result</h2>
+            <div id="oVerdict" class="result-empty">No offer checked yet</div>
+            <div id="oAdvice"></div>
+            <div id="oMeta"></div>
+            <div id="oReasons"></div>
+            <div id="oLinks"></div>
+        </div>
+
+    </div>
+
+    <div class="card checklist-card">
+        <h2>✅ How to verify a genuine offer yourself</h2>
+        <div class="check-grid">
+            <div class="check-box">
+                <div class="cnum2">1</div>
+                <div class="ctxt">Search the company on <b>LinkedIn</b> and check if the recruiter's profile actually exists</div>
+            </div>
+            <div class="check-box">
+                <div class="cnum2">2</div>
+                <div class="ctxt">Open the company's <b>official careers page</b> and confirm the vacancy is listed there</div>
+            </div>
+            <div class="check-box">
+                <div class="cnum2">3</div>
+                <div class="ctxt">Check the email domain — real HR writes from <b>@company.com</b>, never from Gmail</div>
+            </div>
+            <div class="check-box">
+                <div class="cnum2">4</div>
+                <div class="ctxt">For loans, verify the lender on the <b>RBI NBFC register</b> at rbi.org.in</div>
+            </div>
+            <div class="check-box">
+                <div class="cnum2">5</div>
+                <div class="ctxt">Never pay <b>any</b> fee — registration, security, training or processing</div>
+            </div>
+            <div class="check-box">
+                <div class="cnum2">6</div>
+                <div class="ctxt">Never share <b>Aadhaar, PAN or bank details</b> before a signed offer letter</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="table-header">
+            <h2>Check History</h2>
+            <button class="btn-danger" onclick="clearOffers()">🗑 Clear All</button>
+        </div>
+        <div id="oList"></div>
+    </div>
+
+</div>
+
+<script src="offer.js"></script>
+</body>
+</html>
